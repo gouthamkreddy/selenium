@@ -5,7 +5,7 @@ from pync import Notifier
 import time
 import os
 import re
-
+from subprocess import call
 chromedriver = "/Users/gouthamkreddy/Documents/web/git/selenium/chromedriver"
 os.environ["webdriver.chrome.driver"] = chromedriver
 
@@ -29,7 +29,7 @@ for torrent in torrents:
     match = re.search(pattern, searchstring)
     if match:
         print(torrent.text)
-        magnets[i].click()
+        call(["open",magnets[i].get_attribute('href')])
         Notifier.notify('Successfull', title='Torrent Script')
         break
     i=i+1
