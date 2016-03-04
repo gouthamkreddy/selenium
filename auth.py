@@ -19,7 +19,7 @@ while True:
         password = browser.find_element_by_name('password')
         password.clear()
         password.send_keys('vhguest')
-        button = driver.find_element_by_xpath("//input[@type='submit'][@value='Continue']")
+        button = browser.find_element_by_xpath("//input[@type='submit'][@value='Continue']")
         button.click()
         Notifier.notify('Login Successfull', title='Auth Script')
         time.sleep(60)
