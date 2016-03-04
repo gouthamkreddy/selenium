@@ -23,12 +23,13 @@ button = browser.find_element_by_xpath("//input[@value='Log In']")
 button.click()
 time.sleep(10)
 browser.get("https://www.facebook.com/events/birthdays")
+time.sleep(10)
 textarea = browser.find_elements_by_xpath("//textarea[@title='Write a birthday wish on his Timeline...']")
 
 if len(textarea):
     for text in textarea:
         text.clear()
-        text.send_keys('Happy Birthday :)')
+        text.send_keys('Happy Birthday bava :)')
         text.send_keys(Keys.ENTER)
     time.sleep(2)
     Notifier.notify('Birthdays Wishing Done', title='Birthday Script')
