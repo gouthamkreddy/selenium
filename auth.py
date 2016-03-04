@@ -8,7 +8,7 @@ import time
 #display = Display(visible=0, size=(800, 600))
 #display.start()
 
-browser = webdriver.Chrome()
+browser = webdriver.Firefox()
 
 while True:
     try:
