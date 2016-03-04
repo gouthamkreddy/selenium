@@ -24,17 +24,17 @@ magnets = browser.find_elements_by_xpath("//div[@class='iaconbox center floatrig
 
 i = 0
 
-for magnet in magnets:
-    print(magnet.get_attribute('href'))
+for torrent in torrents:
+    searchstring = torrent.text
+    match = re.search(pattern, searchstring)
+    if match:
+        print(torrent.text)
+        magnets[i].click()
+        Notifier.notify('Successfull', title='Torrent Script')
+        break
+    i=i+1
 
-# for torrent in torrents:
-#     searchstring = torrent.text
-#     match = re.search(pattern, searchstring)
-#     if match:
-#         print(torrent.text+" "+magnets[i])
-#     i=i+1
-
-time.sleep(5)
+time.sleep(10)
 browser.quit()
 
 
