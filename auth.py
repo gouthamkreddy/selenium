@@ -19,19 +19,19 @@ pattern_gateway = ".*gateway.*"
 while True:
     browser.get("https://google.com")
     searchstring = browser.current_url
-    match = re.search(pattern, searchstring)
-    if match:
-    	try:
-			status_code = requests.get('https://google.com').status_code
-			Notifier.notify('Already Logged In', title='Auth Script')
-			time.sleep(60)
-			continue
-        except:
-       		Notifier.notify('No Internet Idiot', title='Auth Script')
-       		break
-	match = re.search(pattern_gateway, searchstring)
-    if match:
-    	username = browser.find_element_by_name('username')
+ #    match = re.search(pattern, searchstring)
+ #    if match:
+ #    	try:
+	# 		status_code = requests.get('https://google.com').status_code
+	# 		Notifier.notify('Already Logged In', title='Auth Script')
+	# 		time.sleep(60)
+	# 		continue
+ #        except:
+ #       		Notifier.notify('No Internet Idiot', title='Auth Script')
+ #       		break
+	# match = re.search(pattern_gateway, searchstring)
+ #    if match:
+ 		username = browser.find_element_by_name('username')
     	username.clear()
     	username.send_keys('guestvh')
     	password = browser.find_element_by_name('password')
