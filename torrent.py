@@ -29,7 +29,9 @@ for torrent in torrents:
     match = re.search(pattern, searchstring)
     if match:
         print(torrent.text)
-        call(["open",magnets[i].get_attribute('href')])
+        var str = "magnets[i].get_attribute('href')"
+        call(["aria2",magnets[i].get_attribute('href')])
+        time.sleep(10)
         Notifier.notify('Successfull', title='Torrent Script')
         break
     i=i+1
