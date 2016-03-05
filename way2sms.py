@@ -1,55 +1,43 @@
-#!/usr/bin/env python
-import subprocess
-from selenium import webdriver
-import time
-import os
-import re
-from selenium.webdriver.common.keys import Keys
-
-print('Please Enter 10 Digit Mobile Numeber')
-pattern = '[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
-searchstring = raw_input()
-match = re.search(pattern, searchstring)
-
-if not match:
-	print('Number in Wrong Format')
-	exit()
-
-print('Please Enter Message(Should Be less Than 140 Characters)')
-send_msg = raw_input()
-
-
-url = 'http://www.160by2.com/Index'
-driver = webdriver.Firefox()
-driver.get(url)
-time.sleep(10)
-driver.find_element_by_tag_name('body').send_keys(Keys.ESCAPE)
-time.sleep(3)
-uname=driver.find_element_by_name('username')
-uname.clear()
-uname.send_keys('7752846564')
-passwd = driver.find_element_by_name('password')
-passwd.clear()
-passwd.send_keys('grandgou')
-button = driver.find_element_by_xpath("//button[@type='submit']")
-button.click()
-time.sleep(10)
-driver.find_element_by_tag_name('body').send_keys(Keys.ESCAPE)
-# [contains(text(), 'My Button')]
-send_button = driver.find_element_by_xpath("//*[contains(text(), 'Send Free SMS')]")
-send_button.click()
-time.sleep(10)
-driver.find_element_by_tag_name('body').send_keys(Keys.ESCAPE)
-send_sms = driver.find_element_by_xpath("//li[@id='sendSMS']//a")
-send_sms.click()
-time.sleep(10)
-mobile_no = driver.find_element_by_id('ZLJBIV')
-mobile_no.clear()
-mobile_no.send_keys(searchstring)
-message = driver.find_element_by_id('sendSMSMsg')
-message.clear()
-message.send_keys(send_msg)
-send_button = driver.find_element_by_id("btnsendsms")
-send_button.click()
-
-#driver.close()
+#!/usr/bin/python
+ 
+import urllib2
+import cookielib
+from getpass import getpass
+import sys
+ 
+username = "7752846564"
+passwd = "grandgou"
+message = raw_input("Enter Message: ")
+number = raw_input("Enter Mobile number:")
+message = "+".join(message.split(' '))
+ 
+#Logging into the SMS Site
+url = 'http://site23.way2sms.com/Login1.action?'
+data = 'username='+username+'&password='+passwd+'&Submit=Sign+in'
+ 
+#For Cookies:
+cj = cookielib.CookieJar()
+opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+ 
+# Adding Header detail:
+opener.addheaders = [('User-Agent','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36')]
+ 
+try:
+    usock = opener.open(url, data)
+except IOError:
+    print "Error while logging in."
+    sys.exit(1)
+ 
+ 
+jession_id = str(cj).split('~')[1].split(' ')[0]
+send_sms_url = 'http://site23.way2sms.com/smstoss.action?'
+send_sms_data = 'ssaction=ss&Token='+jession_id+'&mobile='+number+'&message='+message+'&msgLen=140'
+opener.addheaders = [('Referer', 'http://site25.way2sms.com/sendSMS?Token='+jession_id)]
+ 
+try:
+    sms_sent_page = opener.open(send_sms_url,send_sms_data)
+except IOError:
+    print "Error while sending message"
+    
+sys.exit(1)
+print "SMS has been sent."
