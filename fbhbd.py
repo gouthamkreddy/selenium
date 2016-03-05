@@ -4,6 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from pync import Notifier
 import time
+  
+# No check if internet not connected
 
 browser = webdriver.Firefox()
 
@@ -14,7 +16,7 @@ username.clear()
 username.send_keys('gouthamkreddy@gmail.com')
 password = browser.find_element_by_name('pass')
 password.clear()
-password.send_keys('asd!@#123')
+password.send_keys('#########')
 button = browser.find_element_by_xpath("//input[@value='Log In']")
 button.click()
 time.sleep(10)
@@ -26,7 +28,7 @@ textarea = browser.find_elements_by_xpath("//textarea[@title='Write a birthday w
 if len(textarea):
     for text in textarea:
         text.clear()
-        text.send_keys('Happy Birthday bava :)')
+        text.send_keys('Happy Birthday :)')
         text.send_keys(Keys.ENTER)
     time.sleep(2)
     Notifier.notify('Birthdays Wishing Done', title='Birthday Script')
